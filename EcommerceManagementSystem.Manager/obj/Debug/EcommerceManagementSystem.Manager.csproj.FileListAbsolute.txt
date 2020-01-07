@@ -1,0 +1,17 @@
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Manager.dll.config
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Manager.dll
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Manager.pdb
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Database.dll
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Models.dll
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EntityFramework.dll
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EntityFramework.SqlServer.dll
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Database.pdb
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Database.dll.config
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EcommerceManagementSystem.Models.pdb
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EntityFramework.xml
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\bin\Debug\EntityFramework.SqlServer.xml
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\obj\Debug\EcommerceManagementSystem.Manager.csprojAssemblyReference.cache
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\obj\Debug\EcommerceManagementSystem.Manager.csproj.CoreCompileInputs.cache
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\obj\Debug\EcommerceManagementSystem.Manager.csproj.CopyComplete
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\obj\Debug\EcommerceManagementSystem.Manager.dll
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Manager\obj\Debug\EcommerceManagementSystem.Manager.pdb
