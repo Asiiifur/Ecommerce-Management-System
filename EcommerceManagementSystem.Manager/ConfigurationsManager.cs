@@ -36,5 +36,25 @@ namespace EcommerceManagementSystem.Manager
 
             }
         }
+
+        public int PageSize()
+        {
+            using (var context = new EMSDBContext())
+            {
+                var pageSizeConfig = context.Configurations.Find("PageSize");
+
+                return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 5;
+            }
+        }
+
+        public int ShopPageSize()
+        {
+            using (var context = new EMSDBContext())
+            {
+                var pageSizeConfig = context.Configurations.Find("ShopPageSize");
+
+                return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 8;
+            }
+        }
     }
 }

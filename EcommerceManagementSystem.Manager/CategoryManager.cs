@@ -50,7 +50,7 @@ namespace EcommerceManagementSystem.Manager
                 }
                 else
                 {
-                    return context.Categories.Count();
+                   return context.Categories.Count();
                 }
 
 
@@ -70,7 +70,8 @@ namespace EcommerceManagementSystem.Manager
 
         public List<Category> GetCategories(string search, int pageNO)
         {
-            int pageSize = 15;
+            int pageSize = 4;
+
             using (var context = new EMSDBContext())
             {
                 if (!string.IsNullOrEmpty(search))
@@ -103,7 +104,7 @@ namespace EcommerceManagementSystem.Manager
         {
             using (var context = new EMSDBContext())
             {
-                return context.Categories.Where(x => x.IsFeatured).ToList();
+                return context.Categories.Where(x => x.IsFeatured && x.ImageURL != null).ToList(); 
 
             }
         }
@@ -135,7 +136,9 @@ namespace EcommerceManagementSystem.Manager
         {
             using (var context = new EMSDBContext())
             {
-                var category = context.Categories.Find(ID);
+                var category = context.Categories.Where(x => x.ID == ID).Include(x => x.Products).FirstOrDefault();
+
+                context.Products.RemoveRange(category.Products); //first delete products of this category
                 context.Categories.Remove(category);
                 context.SaveChanges();
 

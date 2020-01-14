@@ -11,13 +11,13 @@ namespace EcommerceManagementSystem.Web.Controllers
     public class WidgetsController : Controller
     {
         // GET: Widgets
-        public ActionResult Products(bool isLetestProducts, int? CategoryID)
+        public ActionResult Products(bool isLetestProducts, int? CategoryID = 0)
         {
             ProducWidgetViewModel model = new ProducWidgetViewModel();
             model.IsLatestProducts = isLetestProducts;
             if (isLetestProducts)
             {
-                model.Products = ProductManager.Instance.GetLetestProducts(4);
+                model.Products = ProductManager.Instance.GetLatestProducts(4);
             }
             else if (CategoryID.HasValue && CategoryID.Value > 0)
             {

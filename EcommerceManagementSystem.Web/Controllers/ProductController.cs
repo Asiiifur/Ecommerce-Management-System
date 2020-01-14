@@ -20,16 +20,16 @@ namespace EcommerceManagementSystem.Web.Controllers
 
         public ActionResult ProductTable(string search, int? pageNO)
         {
+            var pageSize = ConfigurationsManager.Instance.PageSize();
             ProductSearchViewModel model = new ProductSearchViewModel();
+            model.SearchTerm = search;
 
-            model.PageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
-            model.Products = ProductManager.Instance.GetProducts(model.PageNO);
+            pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
 
-            if (string.IsNullOrEmpty(search) == false)
-            {
-                model.SearchTerm = search;
-                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-            }
+            var totalRecords = ProductManager.Instance.GetProductsCount(search);
+            model.Products = ProductManager.Instance.GetProducts(search, pageNO.Value, pageSize);
+
+            model.Pager = new Pager(totalRecords, pageNO, pageSize);
 
 
             return PartialView(model);

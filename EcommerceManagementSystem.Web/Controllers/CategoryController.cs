@@ -15,7 +15,7 @@ namespace EcommerceManagementSystem.Web.Controllers
     {
 
 
-
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
@@ -33,7 +33,7 @@ namespace EcommerceManagementSystem.Web.Controllers
 
             if (model.Categories != null)
             {
-                model.Pager = new Pager(model.Categories.Count, pageNO, 15);
+                model.Pager = new Pager(model.Categories.Count, pageNO, 3);
 
                 return PartialView("CategoryTable", model);
             }

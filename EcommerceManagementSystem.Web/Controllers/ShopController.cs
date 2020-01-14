@@ -1,6 +1,9 @@
 ﻿using EcommerceManagementSystem.Manager;
+using EcommerceManagementSystem.Models;
 using EcommerceManagementSystem.Web.Code;
 using EcommerceManagementSystem.Web.Models.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,49 +15,124 @@ namespace EcommerceManagementSystem.Web.Controllers
     [Authorize]
     public class ShopController : Controller
     {
-        
-        public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int? pageNO)
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager
         {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int? pageNo)
+        {
+            var pageSize = ConfigurationsManager.Instance.ShopPageSize();
+
             ShopViewModel model = new ShopViewModel();
 
+            model.SearchTerm = searchTerm;
             model.FeaturedCategories = CategoryManager.Instance.GetFeaturedCategories();
             model.MaximunPrice = ProductManager.Instance.GetMaximumPrice();
-            pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
-            model.Products = ProductManager.Instance.SearchProducts(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy, pageNO.Value, 10);
+
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
             model.Sortby = sortBy;
             model.CategoryID = categoryID;
+
             int totalCount = ProductManager.Instance.SearchProductsCount(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy);
-            model.Pager = new Pager(totalCount, pageNO);
+            model.Products = ProductManager.Instance.SearchProducts(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy, pageNo.Value, pageSize);
+
+            model.Pager = new Pager(totalCount, pageNo, pageSize);
 
             return View(model);
         }
-        public ActionResult FilterProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int? pageNO)
+
+        public ActionResult FilterProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int? pageNo)
         {
+            var pageSize = ConfigurationsManager.Instance.ShopPageSize();
+
             FilterProductsViewModel model = new FilterProductsViewModel();
 
-            model.Products = ProductManager.Instance.SearchProducts(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy, pageNO.Value, 10);
+            model.SearchTerm = searchTerm;
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            model.Sortby = sortBy;
+            model.CategoryID = categoryID;
+
             int totalCount = ProductManager.Instance.SearchProductsCount(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy);
-            model.Pager = new Pager(totalCount, pageNO);
+            model.Products = ProductManager.Instance.SearchProducts(searchTerm, minimumPrice, maximumPrice, categoryID, sortBy, pageNo.Value, pageSize);
+
+            model.Pager = new Pager(totalCount, pageNo, pageSize);
+
             return PartialView(model);
         }
 
+        [Authorize]
         public ActionResult Checkout()
         {
             CheckoutViewModel model = new CheckoutViewModel();
 
-            var CartProductCookie = Request.Cookies["CartProducts"];
-            if (CartProductCookie != null)
-            {
-                //var productIDs = CartProductCookie.Value;
-                //var ids = productIDs.Split('-');
-                //List<int> pIDs = ids.Select(x => int.Parse(x)).ToList();
+            var CartProductsCookie = Request.Cookies["CartProducts"];
 
-                model.CartProductIDs = CartProductCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+            if (CartProductsCookie != null && !string.IsNullOrEmpty(CartProductsCookie.Value))
+            {
+                model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+
                 model.CartProducts = ProductManager.Instance.GetProducts(model.CartProductIDs);
 
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
 
             return View(model);
+        }
+
+        //productIDs should beformatted like = "7-7-9-1"
+        public JsonResult PlaceOrder(string productIDs)
+        {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            if (!string.IsNullOrEmpty(productIDs))
+            {
+                var productQuantities = productIDs.Split('-').Select(x => int.Parse(x)).ToList();
+
+                var boughtProducts = ProductManager.Instance.GetProducts(productQuantities.Distinct().ToList());
+
+                Order newOrder = new Order();
+                newOrder.UserID = User.Identity.GetUserId();
+                newOrder.OrderedAt = DateTime.Now;
+                newOrder.Status = "Pending";
+                newOrder.TotalAmount = boughtProducts.Sum(x => x.Price * productQuantities.Where(productID => productID == x.ID).Count());
+
+                newOrder.OrderItems = new List<OrderItem>();
+                newOrder.OrderItems.AddRange(boughtProducts.Select(x => new OrderItem() { ProductID = x.ID, Quantity = productQuantities.Where(productID => productID == x.ID).Count() }));
+
+                var rowsEffected = ShopManager.Instance.SaveOrder(newOrder);
+
+                result.Data = new { Success = true, Rows = rowsEffected };
+            }
+            else
+            {
+                result.Data = new { Success = false };
+            }
+
+            return result;
         }
     }
 }

@@ -73,6 +73,14 @@
     <Compile Include="Migrations\202001071252394_basicvalidationAdded.Designer.cs">
       <DependentUpon>202001071252394_basicvalidationAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001081059336_OrderItemsTableAAdded.cs" />
+    <Compile Include="Migrations\202001081059336_OrderItemsTableAAdded.Designer.cs">
+      <DependentUpon>202001081059336_OrderItemsTableAAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081104148_quantityorderItemadded.cs" />
+    <Compile Include="Migrations\202001081104148_quantityorderItemadded.Designer.cs">
+      <DependentUpon>202001081104148_quantityorderItemadded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,6 +112,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001071252394_basicvalidationAdded.resx">
       <DependentUpon>202001071252394_basicvalidationAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081059336_OrderItemsTableAAdded.resx">
+      <DependentUpon>202001081059336_OrderItemsTableAAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081104148_quantityorderItemadded.resx">
+      <DependentUpon>202001081104148_quantityorderItemadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

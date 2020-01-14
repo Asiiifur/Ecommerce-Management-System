@@ -10,6 +10,7 @@ namespace EcommerceManagementSystem.Web.Models.ViewModels
     {
         public List<Product> CartProducts { get; set; }
         public List<int> CartProductIDs { get; set; }
+        public ApplicationUser User { get; set; }
     }
     public class ShopViewModel
     {
@@ -19,12 +20,15 @@ namespace EcommerceManagementSystem.Web.Models.ViewModels
         public int? Sortby { get; set; }
         public int? CategoryID { get; set; }
         public Pager Pager { get; set; }
+        public string SearchTerm { get; set; }
     }
+
     public class FilterProductsViewModel
     {
         public List<Product> Products { get; set; }
         public Pager Pager { get; set; }
         public int? Sortby { get; set; }
         public int? CategoryID { get; set; }
+        public string SearchTerm { get; set; }
     }
 }

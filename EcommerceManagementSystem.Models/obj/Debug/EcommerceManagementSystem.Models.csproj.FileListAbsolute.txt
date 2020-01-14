@@ -1,5 +1,6 @@
 F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Models\bin\Debug\EcommerceManagementSystem.Models.dll
 F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Models\bin\Debug\EcommerceManagementSystem.Models.pdb
+F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Models\obj\Debug\EcommerceManagementSystem.Models.csprojAssemblyReference.cache
 F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Models\obj\Debug\EcommerceManagementSystem.Models.csproj.CoreCompileInputs.cache
 F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Models\obj\Debug\EcommerceManagementSystem.Models.dll
 F:\MY PROJECT\EcommerceManagementSystem\EcommerceManagementSystem.Models\obj\Debug\EcommerceManagementSystem.Models.pdb

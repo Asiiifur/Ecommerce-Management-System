@@ -86,11 +86,11 @@
     </div>
 </div>
 <script>
-	$(".pageButtons").click(function () {
+ 	$(".pageButtons").click(function () {
 		$.ajax({
 			url: '@Url.Action("CategoryTable", "Category")',
 			data: {
-				pageNo: $(this).attr("data-pageNo"),
+                pageNo: $(this).attr("data-pageno"),
 				search: '@Model.SearchTerm'
 			}
 		})

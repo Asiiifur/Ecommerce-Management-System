@@ -172,6 +172,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -179,6 +180,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001071425589_InitialCreate.cs" />
+    <Compile Include="Migrations\202001071425589_InitialCreate.Designer.cs">
+      <DependentUpon>202001071425589_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081057101_addedpropertiestouser.cs" />
+    <Compile Include="Migrations\202001081057101_addedpropertiestouser.Designer.cs">
+      <DependentUpon>202001081057101_addedpropertiestouser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -186,6 +196,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\SharedViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
@@ -543,6 +554,8 @@
     <Content Include="Views\Shop\Checkout.cshtml" />
     <Content Include="Views\Shop\FilterProducts.cshtml" />
     <Content Include="Views\Widgets\Products.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -570,6 +583,14 @@
       <Project>{0d74a2d7-3798-45d0-9e58-ac6e431008a0}</Project>
       <Name>EcommerceManagementSystem.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001071425589_InitialCreate.resx">
+      <DependentUpon>202001071425589_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081057101_addedpropertiestouser.resx">
+      <DependentUpon>202001081057101_addedpropertiestouser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

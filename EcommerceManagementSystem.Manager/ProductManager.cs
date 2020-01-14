@@ -166,26 +166,60 @@ namespace EcommerceManagementSystem.Manager
 
             }
         }
-        public List<Product> GetProductsByCategory(int CategoryID, int pageSize)
+        public List<Product> GetProducts(string search, int pageNo, int pageSize)
         {
-
             using (var context = new EMSDBContext())
             {
-
-                return context.Products.Where(x => x.Category.ID == CategoryID).OrderByDescending(x => x.ID).Take(pageSize).Include(x => x.Category).ToList();
-
-
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return context.Products.Where(product => product.Name != null &&
+                         product.Name.ToLower().Contains(search.ToLower()))
+                         .OrderBy(x => x.ID)
+                         .Skip((pageNo - 1) * pageSize)
+                         .Take(pageSize)
+                         .Include(x => x.Category)
+                         .ToList();
+                }
+                else
+                {
+                    return context.Products
+                        .OrderBy(x => x.ID)
+                        .Skip((pageNo - 1) * pageSize)
+                        .Take(pageSize)
+                        .Include(x => x.Category)
+                        .ToList();
+                }
             }
         }
-        public List<Product> GetLetestProducts(int numberOfProducts)
+        public int GetProductsCount(string search)
         {
-
             using (var context = new EMSDBContext())
             {
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return context.Products.Where(product => product.Name != null &&
+                         product.Name.ToLower().Contains(search.ToLower()))
+                         .Count();
+                }
+                else
+                {
+                    return context.Products.Count();
+                }
+            }
+        }
+        public List<Product> GetProductsByCategory(int categoryID, int pageSize)
+        {
+            using (var context = new EMSDBContext())
+            {
+                return context.Products.Where(x => x.Category.ID == categoryID).OrderByDescending(x => x.ID).Take(pageSize).Include(x => x.Category).ToList();
+            }
+        }
 
+        public List<Product> GetLatestProducts(int numberOfProducts)
+        {
+            using (var context = new EMSDBContext())
+            {
                 return context.Products.OrderByDescending(x => x.ID).Take(numberOfProducts).Include(x => x.Category).ToList();
-
-
             }
         }
 

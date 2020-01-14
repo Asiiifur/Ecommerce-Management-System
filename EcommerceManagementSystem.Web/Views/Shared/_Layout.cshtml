@@ -1,8 +1,4 @@
-﻿@{
-    //ConfigurationsManager configurationsManager = new ConfigurationsManager.();
-}
-
-
+﻿
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -47,6 +43,7 @@
         <div class="loader"></div>
     </div>
 
+
     <!-- Boxed -->
     <div class="boxed">
         <div id="site-header-wrap">
@@ -60,13 +57,7 @@
                     </div><!-- /.logo -->
                     <div class="mobile-button"><span></span></div>
                     <ul class="menu-extra">
-                        <li class="box-search">
-                            <a class="icon_search header-search-icon" href="#"></a>
-                            <form role="search" method="get" class="header-search-form" action="#">
-                                <input type="text" value="" name="s" class="header-search-field" placeholder="Search...">
-                                <button type="submit" class="header-search-submit" title="Search">Search</button>
-                            </form>
-                        </li>
+                       
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="box-login">
@@ -76,7 +67,7 @@
                         }
 
                         <li class="box-cart nav-top-cart-wrapper">
-                            <a class="icon_cart nav-cart-trigger active" href="#"><span>3</span></a>
+                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Checkout", "Shop")"><span id="cartProductsCount">0</span></a>
                             <div class="nav-shop-cart">
                                 <div class="widget_shopping_cart_content">
                                     <div class="woocommerce-min-cart-wrap">
@@ -99,43 +90,7 @@
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Index","Shop")">SHOP</a>
-                                    <ul class="submenu">
-                                        <li>
-                                            <a href="shop-3col.html">Shop Layouts</a>
 
-                                        </li>
-                                        <li>
-                                            <a href="shop-detail-des.html">Shop Details</a>
-                                            <ul class="submenu">
-                                                <li><a href="shop-detail-des.html">Details Description</a></li>
-                                                <li><a href="shop-detail-exter.html">Details External</a></li>
-                                                <li><a href="shop-detail-option.html">Details Options</a></li>
-                                                <li><a href="shop-detail-fix.html">Details Fix</a></li>
-                                                <li><a href="shop-detail-zoom.html">Details Zoom</a></li>
-                                                <li><a href="shop-detail-group.html">Details Grouped</a></li>
-                                                <li><a href="shop-detail-video.html">Details Video</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="coming-soon.html">PAGE</a>
-                                    <ul class="submenu">
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                                        <li><a href="404.html"> Error 404</a></li>
-                                        <li><a href="faqs.html">FAQs</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="blog-list.html">BLOG</a>
-                                    <ul class="submenu">
-                                        <li><a href="blog-list.html">Blog List Full</a></li>
-                                        <li><a href="blog-list-1.html">Blog list Slide 1</a></li>
-                                        <li><a href="blog-list-2.html">Blog list Slide 2</a></li>
-                                        <li><a href="blog-grid.html">Blog Gird Full</a></li>
-                                        <li><a href="blog-grid-1.html">Blog Gird Slide</a></li>
-                                        <li><a href="blog-detail.html">Blog Details</a></li>
-                                    </ul><!-- /.submenu -->
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Checkout","Shop")">CHECKOUT</a>
@@ -147,6 +102,7 @@
                 </div><!-- /.container-fluid -->
             </header><!-- /header -->
         </div><!-- /#site-header-wrap -->
+
         @RenderBody()
 
         <section class="flat-row mail-chimp">
@@ -171,7 +127,7 @@
                             </form>
                             <ul class="flat-social">
 
-                                <li>@*<a href="@configurationsManager.GetConfig("FacebookURL").Value"><i class="fa fa-facebook"></i></a>*@</li>
+                                <li>@*<a href="@ConfigurationsManager.Instance.GetConfig("FacebookURL").Value"><i class="fa fa-facebook"></i></a>*@</li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google"></i></a></li>
                                 <li><a href="#"><i class="fa fa-behance"></i></a></li>
@@ -222,8 +178,8 @@
                                 <a href="@Url.Action("Index" ,"Home")"><img src="~/Content/images/E SHOP.png" alt="image" width="107" height="24"></a>
                             </div>
                             <ul class="flat-contact">
-                                <li class="address">@*@configurationsManager.GetConfig("CompanyAddress").Value*@</li>
-                                <li class="phone">@*@configurationsManager.GetConfig("CompanyPhone").Value*@</li>
+                                <li class="address">@*@ConfigurationsManager.Instance.GetConfig("CompanyAddress").Value*@</li>
+                                <li class="phone">@*@ConfigurationsManager.Instance.GetConfig("CompanyPhone").Value*@</li>
                                 <li class="email">infor.deercreative@gmail.com</li>
                             </ul><!-- /.flat-contact -->
                         </div><!-- /.widget -->

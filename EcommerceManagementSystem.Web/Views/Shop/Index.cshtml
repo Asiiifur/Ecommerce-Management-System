@@ -27,7 +27,7 @@
                     <div class="widget widget-search">
                         <form role="search" method="get" class="search-form" action="@Url.Action("Index","Shop")">
                             <label>
-                                <input type="search" class="search-field" placeholder="Search …" value="" name="searchTerm">
+                                <input type="search" class="search-field" placeholder="Search …" value="@Model.SearchTerm"  name="searchTerm">
                             </label>
                             <input type="submit" class="search-submit" value="Search">
                         </form>
@@ -75,6 +75,8 @@
                         var filterProductsViewModel = new FilterProductsViewModel();
                         filterProductsViewModel.Products = Model.Products;
                         filterProductsViewModel.Pager = Model.Pager;
+                        filterProductsViewModel.CategoryID = Model.CategoryID;
+                        filterProductsViewModel.Sortby = Model.Sortby;
 
 
                         Html.RenderPartial("FilterProducts", filterProductsViewModel);
@@ -105,30 +107,63 @@
 
 
             clearTimeout(callTimeout);
-            callTimeout = setTimeout(GetData, 500);
+            callTimeout = setTimeout(PriceRangeChange, 500);
 
 
 
         }
     });
 
-    function GetData() {
-        console.log("GetData Called");
-        $.ajax({
-			url: '@Url.Action("FilterProducts", "Shop")',
-            data: {
-                sortBy :'@Model.Sortby',
-                categoryID:' @Model.CategoryID',
-                minimumPrice: priceSlider.slider("values",0),
-                maximumPrice: priceSlider.slider("values", 1)
+    $(".dataLink").click(function () {
+        var url = $(this).attr("data-href");
+
+        if (url != "" || url != undefined) {
+            GetData(url);
+        }
+    })
+    function GetData(dUrl){
+		console.log("getdata in");
+		showLoader();
+
+		$.ajax({
+			url: dUrl,
+			data: {
+				minimumPrice : priceSlider.slider("values", 0),
+				maximumPrice : priceSlider.slider("values", 1)
 			}
 		})
         .done(function (response) {
-            $("#productview").html(response);
+        	console.log("done");
+        	$("#productsDiv").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	console.log("fail");
+        	alert("FAIL");
+        })
+		.always(function(){
+			console.log("always");
+			hideLoader();
+		});
+		console.log("getdata out");
+    }
+
+    function PriceRangeChange(){
+		$.ajax({
+			url: '@Url.Action("FilterProducts", "Shop")',
+			data: {
+				searchTerm: $("#SearchTerm").val(),
+				sortBy: $("#SortBy").val(),
+				categoryID: $("#CategoryID").val(),
+				minimumPrice : priceSlider.slider("values", 0),
+				maximumPrice : priceSlider.slider("values", 1)
+			}
+		})
+        .done(function (response) {
+        	$("#productsDiv").html(response);
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	alert("FAIL");
         });
-    }
+	}
 
 </script>
