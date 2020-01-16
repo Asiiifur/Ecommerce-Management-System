@@ -105,14 +105,12 @@
 
             $("#amount").val("৳" + minPrice + ".00" + " - " + "৳" + maxPrice + ".00");
 
-
             clearTimeout(callTimeout);
             callTimeout = setTimeout(PriceRangeChange, 500);
 
-
-
         }
     });
+  
 
     $(".dataLink").click(function () {
         var url = $(this).attr("data-href");
@@ -120,7 +118,8 @@
         if (url != "" || url != undefined) {
             GetData(url);
         }
-    })
+    });
+
     function GetData(dUrl){
 		console.log("getdata in");
 		showLoader();
@@ -134,7 +133,7 @@
 		})
         .done(function (response) {
         	console.log("done");
-        	$("#productsDiv").html(response);
+            $("#productview").html(response);
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	console.log("fail");
@@ -159,7 +158,7 @@
 			}
 		})
         .done(function (response) {
-        	$("#productsDiv").html(response);
+            $("#productview").html(response);
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	alert("FAIL");

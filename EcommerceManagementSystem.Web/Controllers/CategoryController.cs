@@ -21,7 +21,10 @@ namespace EcommerceManagementSystem.Web.Controllers
             return View();
         }
         public ActionResult CategoryTable(string search, int? pageNO)
+
         {
+            var pageSize = ConfigurationsManager.Instance.PageSize();
+
             CategorySearchViewModel model = new CategorySearchViewModel();
             model.SearchTerm = search;
 
@@ -29,18 +32,21 @@ namespace EcommerceManagementSystem.Web.Controllers
 
             var totalRecords = CategoryManager.Instance.GetCategoriesCount(search);
 
-            model.Categories = CategoryManager.Instance.GetCategories(search, pageNO.Value);
+            model.Categories = CategoryManager.Instance.GetCategories(search, pageNO.Value ,pageSize);
+            model.Pager = new Pager(totalRecords, pageNO, pageSize);
 
-            if (model.Categories != null)
-            {
-                model.Pager = new Pager(model.Categories.Count, pageNO, 3);
+            return PartialView(model);
 
-                return PartialView("CategoryTable", model);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
+            //if (model.Categories != null)
+            //{
+            //    model.Pager = new Pager(model.Categories.Count, pageNO, 3);
+
+            //    return PartialView("CategoryTable", model);
+            //}
+            //else
+            //{
+            //    return HttpNotFound();
+            //}
         }
 
 

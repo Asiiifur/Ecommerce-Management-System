@@ -68,9 +68,9 @@ namespace EcommerceManagementSystem.Manager
         }
 
 
-        public List<Category> GetCategories(string search, int pageNO)
+        public List<Category> GetCategories (string search, int pageNO, int pageSize)
         {
-            int pageSize = 4;
+            //int pageSize = 6;
 
             using (var context = new EMSDBContext())
             {
